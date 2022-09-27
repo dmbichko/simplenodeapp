@@ -6,17 +6,8 @@ jobs:
   build:
 
     name: my job
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     
-    strategy:
-      matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
-        node-version: [12.x, 14.x, 16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-        exclude:
-          - os: macos-latest
-            node-version: 12.x
-
     steps:
     - name: My first step
       env:
@@ -26,3 +17,6 @@ jobs:
         LAST_NAME: Crowell
       run: |
         echo $MY_VAR $FIRST_NAME $MIDDLE_NAME $LAST_NAME.
+    - name: My second step
+      if: success()
+      run: echo "The previous step has finished successfully"
